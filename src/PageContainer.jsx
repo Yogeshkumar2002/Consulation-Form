@@ -1,4 +1,3 @@
-import React from "react";
 import renderFormSection from "./formSections";
 
 const pages = [
@@ -11,7 +10,7 @@ const pages = [
   "Lab Reports"
 ];
 
-const PageContainer = ({ currentPage, setCurrentPage, formData, setFormData }) => {
+const PageContainer = ({ currentPage, setCurrentPage, formData, setFormData, setPopup}) => {
   const handleNext = () => setCurrentPage((prev) => Math.min(prev + 1, 7));
   const handleBack = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
@@ -26,12 +25,9 @@ const PageContainer = ({ currentPage, setCurrentPage, formData, setFormData }) =
           {pages[currentPage - 1]}
         </button>
       </div>
+   
+      <div>{renderFormSection(currentPage, formData, setFormData, setCurrentPage)}</div>
 
-     
-      <div>{renderFormSection(currentPage, formData, setFormData)}</div>
-
-      
-      
         <div className="row justify-content-center my-4">
           {currentPage > 1 &&  (
             <div className="col-auto">
@@ -48,7 +44,7 @@ const PageContainer = ({ currentPage, setCurrentPage, formData, setFormData }) =
           </div>
         )}
         </div>
-    </div>
+       </div>
   );
 };
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 const Navigation = ({ currentPage, setCurrentPage, steps }) => {
   return (
     <div className="container-fluid text-center my-3">

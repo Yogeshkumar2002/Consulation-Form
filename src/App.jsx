@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./Navigation";
 import PageContainer from "./PageContainer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const steps = [1, 2, 3, 4, 5, 6, 7];
 
@@ -14,7 +16,7 @@ function App() {
     phone: "",
     occupation: "",
     concern: "",
-    currentPage: 1
+    currentPage: 1,
   });
 
   useEffect(() => {
@@ -47,6 +49,15 @@ function App() {
           background-color: #0d6efd;
           color: white;
         }
+        .Toastify__toast {
+         font-size: 1.2rem;
+         text-align: center;
+         border-radius: 10px;
+        }
+        @media (max-width: 768px) {
+         .Toastify__toast {
+         font-size: 1rem;
+         }  
       `}
       </style>
       <Navigation
@@ -59,6 +70,19 @@ function App() {
         setCurrentPage={setCurrentPage}
         formData={formData}
         setFormData={setFormData}
+      />
+
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
       />
     </div>
   );
