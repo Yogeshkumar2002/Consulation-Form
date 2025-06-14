@@ -141,7 +141,7 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
                 <input
                   type="text"
                   className="form-control"
-                  id="reason"
+                  id="reasons"
                   name="reason"
                   required
                   value={formData.reason || ""}
@@ -161,7 +161,7 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
                 <input
                   type="date"
                   className="form-control"
-                  id="startDate"
+                  id="startingDate"
                   name="startDate"
                   required
                   value={formData.startDate || ""}
@@ -271,11 +271,27 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             "Neurological Disorders",
           ].map((item, idx) => (
             <div className="form-check" key={idx}>
+
               <input
                 type="checkbox"
                 className="form-check-input"
                 id={`check${idx + 1}`}
+                checked={formData.diseases?.includes(item)}
+                onChange={(e) => {
+                  const isChecked = e.target.checked;
+                  const value = item;
+                  setFormData((prev) => {
+                    const current = prev.diseases || [];
+                    return {
+                      ...prev,
+                      diseases: isChecked
+                        ? [...current, value]
+                        : current.filter((d) => d !== value),
+                    };
+                  });
+                }}
               />
+
               <label className="form-check-label" htmlFor={`check${idx + 1}`}>
                 {item}
               </label>
@@ -285,18 +301,40 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
           <label className="form-label">
             Are your vaccinations up to date?
           </label>
-          <select className="form-select">
-            <option>No</option>
-            <option>Yes</option>
-            <option>Not Sure</option>
+          <select
+            className="form-select"
+            name="vaccinations"
+            id="vaccinations"
+            value={formData.vaccinations || ""}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, vaccinations: e.target.value, }))
+            }
+          >
+            <option value=""></option>
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+            <option value="Not Sure">Not Sure</option>
           </select>
           <br />
-          <label className="form-label">Received COVID-19 Vaccine?</label>
-          <select className="form-select">
-            <option>No Vaccine</option>
-            <option>First Dose</option>
-            <option>Second Dose</option>
-            <option>Booster</option>
+          <label className="form-label" name="ReceivedVaccine">
+            Received COVID-19 Vaccine?
+          </label>
+          <select
+            className="form-select"
+            name="ReceivedVaccine"
+            id="ReceivedVaccine"
+            value={formData.ReceivedVaccine || ""}
+            onChange={(e) =>
+              setFormData((prev) => ({
+                ...prev,
+                ReceivedVaccine: e.target.value,
+              }))
+            }
+          >
+            <option value="No Vaccine">No Vaccine</option>
+            <option value="First Dose">First Dose</option>
+            <option value="Second Dose">Second Dose</option>
+            <option value="Booster">Booster</option>
           </select>
         </div>
       );
@@ -304,15 +342,15 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
     case 6:
       return (
         <div className="container mt-3 mx-0">
-         
           <div className="mb-3">
             <label htmlFor="smoke">Having a Smoking Habit:</label>
             <select
               id="smoke"
+              name="smoking"
               className="form-select"
-              value={formData.smoke || ""}
+              value={formData.smoking || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, smoke: e.target.value }))
+                setFormData((prev) => ({ ...prev, smoking: e.target.value }))
               }
             >
               <option value="">Select...</option>
@@ -322,15 +360,15 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             </select>
           </div>
 
-          
           <div className="mb-3">
             <label htmlFor="drinking">Having a Drinking Alcohol Habit:</label>
             <select
               id="drinking"
               className="form-select"
-              value={formData.drinking || ""}
+              name="Drinking"
+              value={formData.Drinking || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, drinking: e.target.value }))
+                setFormData((prev) => ({ ...prev, Drinking: e.target.value }))
               }
             >
               <option value="">Select...</option>
@@ -340,15 +378,15 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             </select>
           </div>
 
-        
           <div className="mb-3">
             <label htmlFor="drugs">Recreational Drug Use:</label>
             <select
               id="drugs"
+              name="Drug"
               className="form-select"
-              value={formData.drugs || ""}
+              value={formData.Drug || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, drugs: e.target.value }))
+                setFormData((prev) => ({ ...prev, Drug: e.target.value }))
               }
             >
               <option value="">Select...</option>
@@ -357,15 +395,15 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             </select>
           </div>
 
-         
           <div className="mb-3">
             <label htmlFor="coffee">Caffeine Intake:</label>
             <select
               id="coffee"
+              name="Caffeine"
               className="form-select"
-              value={formData.coffee || ""}
+              value={formData.Caffeine || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, coffee: e.target.value }))
+                setFormData((prev) => ({ ...prev, Caffeine: e.target.value }))
               }
             >
               <option value="">Select...</option>
@@ -376,15 +414,15 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             </select>
           </div>
 
-          
           <div className="mb-3">
             <label htmlFor="exercise">Exercise Routine:</label>
             <select
               id="exercise"
+              name="Exercise"
               className="form-select"
-              value={formData.exercise || ""}
+              value={formData.Exercise || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, exercise: e.target.value }))
+                setFormData((prev) => ({ ...prev, Exercise: e.target.value }))
               }
             >
               <option value="">Select...</option>
@@ -395,15 +433,15 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             </select>
           </div>
 
-         
           <div className="mb-3">
             <label htmlFor="sleeping">Sleep Pattern:</label>
             <select
               id="sleeping"
+              name="Sleep"
               className="form-select"
-              value={formData.sleeping || ""}
+              value={formData.Sleep || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, sleeping: e.target.value }))
+                setFormData((prev) => ({ ...prev, Sleep: e.target.value }))
               }
             >
               <option value="">Select...</option>
@@ -413,15 +451,15 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             </select>
           </div>
 
-         
           <div className="mb-3">
             <label htmlFor="eats">Diet:</label>
             <select
               id="eats"
+              name="Diet"
               className="form-select"
-              value={formData.eats || ""}
+              value={formData.Diet || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, eats: e.target.value }))
+                setFormData((prev) => ({ ...prev, Diet: e.target.value }))
               }
             >
               <option value="">Select...</option>
@@ -439,11 +477,12 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             <select
               id="mental-health"
               className="form-select"
-              value={formData.mentalHealth || ""}
+              name="Feeling"
+              value={formData.Feeling || ""}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
-                  mentalHealth: e.target.value,
+                  Feeling: e.target.value,
                 }))
               }
             >
@@ -461,11 +500,12 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             <select
               id="emotional-health"
               className="form-select"
-              value={formData.emotionalHealth || ""}
+              name="Therapy"
+              value={formData.Therapy || ""}
               onChange={(e) =>
                 setFormData((prev) => ({
                   ...prev,
-                  emotionalHealth: e.target.value,
+                  Therapy: e.target.value,
                 }))
               }
             >
@@ -481,10 +521,11 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
             </label>
             <select
               id="disable"
+              name="Disability"
               className="form-select"
-              value={formData.disability || ""}
+              value={formData.Disability || ""}
               onChange={(e) =>
-                setFormData((prev) => ({ ...prev, disability: e.target.value }))
+                setFormData((prev) => ({ ...prev, Disability: e.target.value }))
               }
             >
               <option value="">Select...</option>
@@ -500,32 +541,42 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
         <>
           <div className="container mt-3 mx-0">
             <div className="report">
-            
               <label htmlFor="data" className="mt-2">
                 Please Upload your most recent blood test reports (within the
                 last 6 months):
               </label>
               <br />
-            
-              <input type="file" className="form-control mt-2" />
+
+              <input
+                type="file"
+                name="Report"
+                accept=".pdf,.doc,.docx,.jpg,.png"
+                className="form-control mt-2"
+                onChange={(e) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    Report: e.target.files[0],
+                  }));
+                }}
+              />
 
               <p style={{ textAlign: "center" }} className="mt-5">
                 (or)
               </p>
 
-             
               <label htmlFor="dor" className="mt-3">
                 Date of Report: <em>(optional)</em>
               </label>
               <input
                 type="date"
                 className="form-control"
-                id="dor"
-                value={formData.reportDate || ""}
+                id="reportDate"
+                name="dor"
+                value={formData.dor || ""}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
-                    reportDate: e.target.value,
+                    dor: e.target.value,
                   }))
                 }
               />
@@ -539,10 +590,14 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
               </label>
               <select
                 id="test"
+                name="typeOfTest"
                 className="form-select"
-                value={formData.testType || ""}
+                value={formData.typeOfTest || ""}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, testType: e.target.value }))
+                  setFormData((prev) => ({
+                    ...prev,
+                    typeOfTest: e.target.value,
+                  }))
                 }
               >
                 <option value="">Select...</option>
@@ -555,10 +610,7 @@ function renderFormSection(currentPage, formData, setFormData, setCurrentPage) {
 
           <div className="container my-5 mb-0">
             <div className="row justify-content-center">
-              
-
               <div className="col-auto">
-
                 <button
                   type="submit"
                   className="btn btn-success px-5"

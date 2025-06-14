@@ -36,7 +36,7 @@ const PageContainer = ({ currentPage, setCurrentPage, formData, setFormData, set
               </button>
             </div>
           )}
-        {currentPage !== 1 && currentPage!= 7 && (
+        {currentPage !== 1 && currentPage < 7 && (
           <div className="col-auto">
             <button className="btn btn-primary px-5" onClick={handleNext}>
               Next
